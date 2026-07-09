@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+import BotaoTopo from './components/BotaoTopo.jsx';
 import Navbar from './components/Navbar.jsx';
 import Toast from './components/Toast.jsx';
 import Home from './components/pages/Home.jsx';
+import Admin from './components/pages/Admin.jsx';
 import Auth from './components/pages/Auth.jsx';
 import Minicursos from './components/pages/Minicursos.jsx';
 import MinicursoDetail from './components/pages/MinicursoDetail.jsx';
@@ -17,12 +19,14 @@ import {
   inscreverPalestra as inscreverPalestraApi,
   inscreverEvento as inscreverEventoApi,
   logout as logoutApi,
+  meuPerfil,
 } from './services/api.js';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [minicursos, setMinicursos] = useState([]);
-  const [minhasMcInscricoes, setMinhasMcInscricoes] = useState([]);
+  const [minhasMcInscricoes, setMinhasMcInscricoes] = useState([]); 
+  const [minhaInscricaoEvento, setMinhaInscricaoEvento] = useState(null);
   const [minhasPalestraInscricoes, setMinhasPalestraInscricoes] = useState([]);
 
   const [page, setPage] = useState('page-home');
@@ -42,10 +46,25 @@ export default function App() {
     if (!sectionId) window.scrollTo({ top: 0 });
   }, []);
 
+  // Recupera o login automaticamente se já existir um token salvo
+  useEffect(() => {
+    const token = localStorage.getItem('integra_token');
+    if (token) {
+      meuPerfil()
+        .then(setCurrentUser)
+        .catch(() => localStorage.removeItem('integra_token'));
+    }
+  }, []);
+
   useEffect(() => {
     listarMinicursos()
       .then(setMinicursos)
       .catch(() => showToast('Não foi possível carregar os minicursos.'));
+  }, [showToast]);
+  const recarregarMinicursos = useCallback(() => {
+    listarMinicursos()
+      .then(setMinicursos)
+      .catch(() => showToast('Não foi possível recarregar os minicursos.'));
   }, [showToast]);
 
   const carregarMinhasInscricoes = useCallback(() => {
@@ -53,6 +72,7 @@ export default function App() {
       .then((data) => {
         setMinhasMcInscricoes(data.minicursos);
         setMinhasPalestraInscricoes(data.palestras);
+        setMinhaInscricaoEvento(data.eventos[0] || null);
       })
       .catch(() => {});
   }, []);
@@ -185,7 +205,7 @@ export default function App() {
         onLogout={logout}
       />
 
-      {page === 'page-home' && (
+     {page === 'page-home' && (
         <Home
           navigate={navigate}
           currentUser={currentUser}
@@ -195,6 +215,7 @@ export default function App() {
           isInscritoPalestra={isInscritoPalestra}
           inscreverPalestra={inscreverPalestra}
           onInscreverEvento={inscreverEvento}
+          meuAssento={minhaInscricaoEvento?.assento}
         />
       )}
 
@@ -247,8 +268,18 @@ export default function App() {
       {page === 'page-certificado-detail' && currentMC && currentUser && (
         <CertificadoDetail mc={currentMC} currentUser={currentUser} navigate={navigate} />
       )}
+      {page === 'page-admin' && (
+        <Admin
+          currentUser={currentUser}
+          minicursos={minicursos}
+          recarregarMinicursos={recarregarMinicursos}
+          navigate={navigate}
+        />
+      )}
 
       <Toast msg={toast.msg} visible={toast.visible} />
+      <Toast msg={toast.msg} visible={toast.visible} />
+      <BotaoTopo />
     </>
   );
 }

@@ -5,6 +5,7 @@ from app import models
 from app.routes_auth import router as auth_router
 from app.routes_eventos import router as eventos_router
 from app.routes_certificados import router as certificados_router
+from app.routes_admin import router as admin_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -21,7 +22,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(eventos_router)
 app.include_router(certificados_router)
-
+app.include_router(admin_router)
 
 @app.get("/")
 def raiz():

@@ -509,7 +509,7 @@ input:focus-visible {
 .notice-box strong { color: var(--navy); }
 
 /* ── Página de detalhe / inscrição do minicurso ── */
-.mcd-page { max-width: 1040px; margin: 0 auto; padding: 6.5rem 5% 4rem; min-height: 100vh; background: #BBD0ED; }
+.mcd-page { max-width: 1040px; margin: 0 auto; padding: 6.5rem 5% 4rem; min-height: 100vh; }
 .mcd-back {
   display: inline-flex; align-items: center; gap: .4rem;
   font-size: .85rem; font-weight: 500; color: var(--navy);
@@ -816,4 +816,124 @@ input:focus-visible {
     transition-duration: .001ms !important;
     scroll-behavior: auto !important;
   }
+}
+/* ============================================================
+   PATCH FINAL — CONTRASTE E LEGIBILIDADE
+   ============================================================ */
+
+.auth-card {
+  background: #FFFFFF !important;
+  border: 1px solid var(--line) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.auth-logo .logo-text,
+.auth-logo .logo-text span {
+  color: var(--navy-deep) !important;
+}
+.auth-logo .logo-sub {
+  color: var(--muted) !important;
+}
+.auth-tabs {
+  background: var(--surface-soft) !important;
+  border: 1px solid var(--line) !important;
+}
+.auth-tab {
+  color: var(--muted) !important;
+}
+.auth-tab.active {
+  background: var(--navy-deep) !important;
+  color: #FFFFFF !important;
+}
+.field label {
+  color: var(--ink) !important;
+}
+.field input {
+  background: var(--surface-soft) !important;
+  border: 1.5px solid var(--line) !important;
+  color: var(--ink) !important;
+}
+.field input::placeholder {
+  color: rgba(42,77,136,0.5) !important;
+}
+.form-error {
+  color: #A6484A !important;
+}
+.form-success {
+  background: #E4EFE8 !important;
+  border: 1px solid var(--success) !important;
+  color: var(--success-deep) !important;
+}
+.auth-footnote {
+  color: var(--muted) !important;
+}
+.auth-footnote a {
+  color: var(--navy-deep) !important;
+}
+
+.btn-submit {
+  background: var(--navy-deep) !important;
+  color: #FFFFFF !important;
+}
+.btn-submit:hover {
+  background: var(--success) !important;
+}
+.btn-submit.inscrito {
+  background: var(--success) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+.btn-inscrever {
+  background: var(--navy-deep) !important;
+  color: #FFFFFF !important;
+}
+.btn-inscrever:hover:not(:disabled) {
+  background: var(--success) !important;
+}
+.btn-inscrever.inscrito {
+  background: var(--success) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* Fundo azul claro cobrindo a página inteira, até as bordas */
+.page:has(.mcd-page) {
+  background: #BBD0ED;
+}
+
+/* Caixa "Você já está inscrito(a)" com azul escuro da paleta (mais específico que o .form-success genérico acima) */
+.mcd-form-card .form-success {
+  background: var(--navy-deep) !important;
+  border: 1px solid var(--navy-deep) !important;
+  color: #FFFFFF !important;
+}
+.minicursos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+.minicursos-grid .minicurso-card {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 900px) {
+  .minicursos-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .minicursos-grid { grid-template-columns: 1fr; }
+}
+
+.minicursos-grid .minicurso-card {
+  height: 100%;
+}
+.minicursos-grid .minicurso-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.minicursos-grid .minicurso-footer {
+  margin-top: auto;
+  padding-top: 1rem;
 }

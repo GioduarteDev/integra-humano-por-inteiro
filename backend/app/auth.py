@@ -48,3 +48,10 @@ def usuario_logado(token: str = Depends(oauth2_scheme), db: Session = Depends(ge
     if usuario is None:
         raise excecao
     return usuario
+def usuario_admin(usuario_atual: models.Usuario = Depends(usuario_logado)):
+    if not usuario_atual.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Acesso restrito a administradores",
+        )
+    return usuario_atual

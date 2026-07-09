@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { isValidEmail, isValidPhone } from '../../data/minicursos.js';
 import { cadastrar, login as loginApi, meuPerfil, esqueciSenha } from '../../services/api.js';
 
-const EMPTY_CAD = { nome: '', email: '', tel: '', senha: '', confirma: '' };
+const EMPTY_CAD = { nome: '', email: '', tel: '', cpf: '', senha: '', confirma: '' };
 
 export default function Auth({ login, navigate }) {
   const [tab, setTab] = useState('login');
@@ -51,12 +51,14 @@ export default function Auth({ login, navigate }) {
     const nome = cad.nome.trim();
     const email = cad.email.trim();
     const telefone = cad.tel.trim();
+    const cpf = cad.cpf.trim();
     const { senha, confirma } = cad;
 
     const errors = {};
 
     if (nome.length < 3) errors.nome = 'Informe seu nome completo.';
     if (!isValidEmail(email)) errors.email = 'E-mail inválido.';
+    if (cpf.replace(/\D/g, '').length !== 11) errors.cpf = 'CPF inválido. Deve ter 11 números.';
     if (!isValidPhone(telefone)) errors.tel = 'Telefone inválido. Ex: (11) 99999-9999';
     if (senha.length < 6) errors.senha = 'A senha deve ter ao menos 6 caracteres.';
     if (!confirma) {
@@ -71,7 +73,7 @@ export default function Auth({ login, navigate }) {
     }
 
     try {
-      await cadastrar({ nome, email, senha, telefone });
+      await cadastrar({ nome, email, senha, telefone, cpf});
 
       setCadSuccess(
         `✓ Cadastro realizado! Bem-vindo(a), ${nome.split(' ')[0]}. Redirecionando para o login...`
@@ -293,6 +295,18 @@ export default function Auth({ login, navigate }) {
                   className={inputClass(cadErrors.tel)}
                 />
                 <span className="form-error">{cadErrors.tel}</span>
+              </div> 
+              <div className="field">
+                <label htmlFor="cad-cpf">CPF *</label>
+                <input
+                  type="text"
+                  id="cad-cpf"
+                  placeholder="000.000.000-00"
+                  value={cad.cpf}
+                  onChange={onCadChange('cpf')}
+                  className={inputClass(cadErrors.cpf)}
+                />
+                <span className="form-error">{cadErrors.cpf}</span>
               </div>
 
               <div className="field-row">

@@ -209,18 +209,18 @@ export default function HeroParallax({ onEntrar, onVerMinicursos }) {
               onClick={onVerMinicursos}
               style={{
                 fontFamily: 'Inter, sans-serif',
-                background: 'transparent',
-                color: '#FFFFFF',
-                border: `1.5px solid ${dourado}99`,
+                background: '#FFFFFF',
+                color: '#04044A',
+                border: 'none',
                 padding: '.95rem 2.3rem',
                 borderRadius: '99px',
                 fontSize: '.95rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'background .2s ease',
+                transition: 'transform .2s ease',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,162,39,0.12)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
             >
               Ver minicursos
             </button>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import HeroParallax from '../HeroParallax.jsx';
+import MapaAssentos from '../MapaAssentos.jsx';
 
 const SCHEDULE = [
   {
@@ -142,7 +143,8 @@ export default function Home({
   onScrolled,
   isInscritoPalestra,
   inscreverPalestra,
-  onInscreverEvento
+  onInscreverEvento,
+  meuAssento,
 }) {
   useEffect(() => {
     if (!scrollTarget) return;
@@ -210,6 +212,18 @@ export default function Home({
             />
           </div>
         </div>
+      </section>
+      {/* MAPA DE ASSENTOS */}
+      <section className="section" id="mapa-assentos">
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div className="section-label">Escolha seu lugar</div>
+          <h2 className="section-title">Onde Você Vai Sentar</h2>
+          <p className="section-body" style={{ margin: '0 auto' }}>
+            Como são muitas palestras ao longo do dia, escolha seu assento favorito
+            no salão principal.
+          </p>
+        </div>
+        <MapaAssentos currentUser={currentUser} meuAssento={meuAssento} />
       </section>
 
       {/* PROGRAMAÇÃO */}

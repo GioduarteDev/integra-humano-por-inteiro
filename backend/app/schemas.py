@@ -21,6 +21,7 @@ class UsuarioOut(BaseModel):
     nome: str
     email: str
     telefone: Optional[str] = None
+    is_admin: bool = False
 
     class Config:
         from_attributes = True
@@ -71,7 +72,22 @@ class MinicursoOut(BaseModel):
     class Config:
         from_attributes = True
 
+class MinicursoCreate(BaseModel):
+    titulo: str
+    descricao: Optional[str] = None
+    carga_horaria: int
+    horario_inicio: time
+    horario_fim: time
+    video_url: Optional[str] = None
 
+
+class MinicursoUpdate(BaseModel):
+    titulo: Optional[str] = None
+    descricao: Optional[str] = None
+    carga_horaria: Optional[int] = None
+    horario_inicio: Optional[time] = None
+    horario_fim: Optional[time] = None
+    video_url: Optional[str] = None
 # ---------- Inscrições ----------
 class InscricaoEventoCreate(BaseModel):
     evento_id: int
@@ -98,3 +114,10 @@ class CertificadoOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+class AssentoEscolha(BaseModel):
+    assento: str
+    
+class InscreverPorContato(BaseModel):
+    email: Optional[str] = None
+    cpf: Optional[str] = None    

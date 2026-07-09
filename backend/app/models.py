@@ -10,7 +10,9 @@ class Usuario(Base):
     email = Column(String(150), unique=True, nullable=False)
     senha_hash = Column(String(255), nullable=False)
     telefone = Column(String(20))
+    cpf = Column(String(14), unique=True)
     criado_em = Column(TIMESTAMP, server_default=func.now())
+    is_admin = Column(Boolean, default=False)
 
 
 class Evento(Base):
@@ -51,6 +53,7 @@ class InscricaoEvento(Base):
     usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
     evento_id = Column(Integer, ForeignKey("eventos.id"), nullable=False)
     data_inscricao = Column(TIMESTAMP, server_default=func.now())
+    assento = Column(String(5), unique=True)
 
 
 class InscricaoPalestra(Base):

@@ -28,11 +28,11 @@ async function request(path, options = {}) {
 }
 
 // ---------- Autenticação ----------
-export async function cadastrar({ nome, email, senha, telefone }) {
+export async function cadastrar({ nome, email, senha, telefone, cpf }) {
   return request('/auth/cadastro', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nome, email, senha, telefone }),
+    body: JSON.stringify({ nome, email, senha, telefone, cpf }),
   });
 }
 
@@ -165,4 +165,75 @@ export async function esqueciSenha(email) {
 }
 export async function contarInscritos(evento_id) {
   return request(`/eventos/${evento_id}/contagem`);
+}
+// ---------- Administração ----------
+export async function listarParticipantes() {
+  return request('/admin/participantes');
+}
+
+export async function verInscricoesParticipante(usuario_id) {
+  return request(`/admin/participantes/${usuario_id}/inscricoes`);
+}
+
+export async function criarMinicursoAdmin(dados) {
+  return request('/admin/minicursos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados),
+  });
+}
+
+export async function editarMinicursoAdmin(minicurso_id, dados) {
+  return request(`/admin/minicursos/${minicurso_id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados),
+  });
+}
+
+export async function apagarMinicursoAdmin(minicurso_id) {
+  return request(`/admin/minicursos/${minicurso_id}`, {
+    method: 'DELETE',
+  });
+}
+export async function listarAssentosOcupados(evento_id) {
+  return request(`/eventos/${evento_id}/assentos`);
+}
+
+export async function escolherAssento(evento_id, assento) {
+  return request(`/inscricoes/evento/${evento_id}/assento`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ assento }),
+  });
+}
+export async function apagarParticipanteAdmin(usuario_id) {
+  return request(`/admin/participantes/${usuario_id}`, { method: 'DELETE' });
+}
+
+export async function cadastrarParticipanteAdmin(dados) {
+  return request('/admin/participantes', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados),
+  });
+}
+
+export async function removerDeMinicursoAdmin(minicurso_id, usuario_id) {
+  return request(`/admin/minicursos/${minicurso_id}/participantes/${usuario_id}`, {
+    method: 'DELETE',
+  });
+}
+export async function listarInscritosMinicurso(minicurso_id) {
+  return request(`/minicursos/${minicurso_id}/inscritos`);
+}
+export async function inscreverParticipanteAdmin(minicurso_id, dados) {
+  return request(`/admin/minicursos/${minicurso_id}/inscrever`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dados),
+  });
+}
+export async function buscarEstatisticas() {
+  return request('/admin/estatisticas');
 }

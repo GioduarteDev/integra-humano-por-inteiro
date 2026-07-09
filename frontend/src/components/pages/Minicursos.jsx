@@ -34,8 +34,7 @@ export default function Minicursos({
               </>
             )}
           </div>
-
-          <div>
+          <div className="minicursos-grid">
             {minicursos.map((mc) => {
               const inscrito = currentUser ? isInscritoMC(mc.id) : false;
 

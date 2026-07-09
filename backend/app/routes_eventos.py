@@ -132,6 +132,15 @@ def minhas_inscricoes(
     minicursos = db.query(models.InscricaoMinicurso).filter(models.InscricaoMinicurso.usuario_id == usuario_atual.id).all()
 
     return {
+        "eventos": [{"evento_id": e.evento_id, "data_inscricao": e.data_inscricao, "assento": e.assento} for e in eventos],
+        "palestras": [{"palestra_id": p.palestra_id, "inscrito_por_id": p.inscrito_por_id} for p in palestras],
+        "minicursos": [
+            {"minicurso_id": m.minicurso_id, "inscrito_por_id": m.inscrito_por_id, "presente": m.presente}
+            for m in minicursos
+        ],
+    }
+
+    return {
         "eventos": [{"evento_id": e.evento_id, "data_inscricao": e.data_inscricao} for e in eventos],
         "palestras": [{"palestra_id": p.palestra_id, "inscrito_por_id": p.inscrito_por_id} for p in palestras],
         "minicursos": [
@@ -250,3 +259,37 @@ def cancelar_inscricao_minicurso(
     db.delete(inscricao)
     db.commit()
     return {"mensagem": "Inscrição cancelada com sucesso"}
+# ---------- Mapa de assentos ----------
+@router.get("/eventos/{evento_id}/assentos")
+def listar_assentos_ocupados(evento_id: int, db: Session = Depends(get_db)):
+    inscricoes = db.query(models.InscricaoEvento).filter(
+        models.InscricaoEvento.evento_id == evento_id,
+        models.InscricaoEvento.assento.isnot(None),
+    ).all()
+    return {"ocupados": [i.assento for i in inscricoes]}
+
+
+@router.patch("/inscricoes/evento/{evento_id}/assento")
+def escolher_assento(
+    evento_id: int,
+    dados: schemas.AssentoEscolha,
+    usuario_atual: models.Usuario = Depends(auth.usuario_logado),
+    db: Session = Depends(get_db),
+):
+    inscricao = db.query(models.InscricaoEvento).filter(
+        models.InscricaoEvento.evento_id == evento_id,
+        models.InscricaoEvento.usuario_id == usuario_atual.id,
+    ).first()
+    if not inscricao:
+        raise HTTPException(status_code=404, detail="Você precisa se inscrever no evento primeiro")
+
+    ja_ocupado = db.query(models.InscricaoEvento).filter(
+        models.InscricaoEvento.evento_id == evento_id,
+        models.InscricaoEvento.assento == dados.assento,
+    ).first()
+    if ja_ocupado and ja_ocupado.usuario_id != usuario_atual.id:
+        raise HTTPException(status_code=400, detail="Este assento já está ocupado")
+
+    inscricao.assento = dados.assento
+    db.commit()
+    return {"mensagem": "Assento escolhido com sucesso", "assento": dados.assento}

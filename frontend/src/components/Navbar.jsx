@@ -13,24 +13,22 @@ export default function Navbar({ page, navigate, currentUser, onLogout }) {
   const [open, setOpen] = useState(false);
   const [solid, setSolid] = useState(false);
 
-  // O hambúrguer, a logo e o ícone de login ficam brancos e sem fundo sobre
-  // o hero escuro da Home; fora dela (fundo claro) já nascem na cor escura.
   useEffect(() => {
-  const onScroll = () => {
-    if (page === 'page-auth') {
-      setSolid(false);
-      return;
-    }
-    if (page !== 'page-home') {
-      setSolid(true);
-      return;
-    }
-    setSolid(window.scrollY > window.innerHeight * 0.85);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-  return () => window.removeEventListener('scroll', onScroll);
-}, [page]);
+    const onScroll = () => {
+      if (page === 'page-auth') {
+        setSolid(false);
+        return;
+      }
+      if (page !== 'page-home') {
+        setSolid(true);
+        return;
+      }
+      setSolid(window.scrollY > window.innerHeight * 0.85);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [page]);
 
   useEffect(() => {
     if (!open) return;
@@ -131,6 +129,16 @@ export default function Navbar({ page, navigate, currentUser, onLogout }) {
                   Certificados
                 </a>
               </li>
+              {currentUser.is_admin && (
+                <li>
+                  <a
+                    className={linkActive('page-admin') ? 'active' : undefined}
+                    onClick={() => go('page-admin')}
+                  >
+                    Administração
+                  </a>
+                </li>
+              )}
             </>
           )}
         </ul>
@@ -216,10 +224,10 @@ export default function Navbar({ page, navigate, currentUser, onLogout }) {
         .nav-drawer.open { transform: translateX(0); }
 
         .nav-drawer-logo {
-       font-family: var(--font-display-alt); font-weight: 700; font-size: 1.3rem;
-       letter-spacing: .1em; text-transform: uppercase; color: #fff;
-       margin-top: 2.8rem; margin-bottom: 2.5rem;
-     }
+          font-family: var(--font-display-alt); font-weight: 700; font-size: 1.3rem;
+          letter-spacing: .1em; text-transform: uppercase; color: #fff;
+          margin-top: 2.8rem; margin-bottom: 2.5rem;
+        }
 
         .nav-drawer-links { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; flex: 1; }
         .nav-drawer-links a {
