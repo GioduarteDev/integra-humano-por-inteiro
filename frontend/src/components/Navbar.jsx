@@ -220,6 +220,7 @@ export default function Navbar({ page, navigate, currentUser, onLogout }) {
           padding: 2.2rem 2rem;
           display: flex; flex-direction: column;
           box-shadow: 20px 0 60px rgba(0,0,0,0.3);
+          overflow-y: auto;
         }
         .nav-drawer.open { transform: translateX(0); }
 
@@ -229,13 +230,20 @@ export default function Navbar({ page, navigate, currentUser, onLogout }) {
           margin-top: 2.8rem; margin-bottom: 2.5rem;
         }
 
-        .nav-drawer-links { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; flex: 1; }
+        .nav-drawer-links { list-style: none; display: flex; flex-direction: column; gap: 2.2rem; flex: 1; }
         .nav-drawer-links a {
           font-family: var(--font-display); font-size: 1.3rem; font-weight: 700;
           color: rgba(255,255,255,0.82); text-decoration: none; cursor: pointer;
-          transition: color .2s ease, padding-left .2s ease; display: inline-block;
+          transition: color .2s ease, padding-left .2s ease, border-color .2s ease;
+          display: inline-block;
+          padding-bottom: .35rem;
+          border-bottom: 1px solid rgba(201,162,39,0.35);
         }
-        .nav-drawer-links a:hover, .nav-drawer-links a.active { color: var(--blue-soft); padding-left: .3rem; }
+        .nav-drawer-links a:hover, .nav-drawer-links a.active {
+          color: var(--blue-soft);
+          padding-left: .3rem;
+          border-bottom-color: var(--gold);
+        }
         .nav-drawer-divider { height: 1px; background: rgba(255,255,255,0.14); margin: .3rem 0; }
 
         .nav-drawer-foot { display: flex; flex-direction: column; gap: .8rem; }

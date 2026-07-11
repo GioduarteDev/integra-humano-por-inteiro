@@ -6,14 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Playfair+Display:wght@600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
-  --navy-deep:    #04044A;   /* tom mais escuro — topo do hero, navbar, drawer */
-  --navy:         #2A4D88;   /* tom médio */
-  --blue-action:  #7C94B8;   /* Ocean City — botões primários */
+  --navy-deep:    #04044A;
+  --navy:         #2A4D88;
+  --blue-action:  #7C94B8;
   --blue-mid:     #97AAC9;
-  --blue-soft:    #B1BBC8;   /* Glacial Salt — tom mais claro do degradê */
-  --blue-pale:    #D9D9D8;   /* Concerto */
+  --blue-soft:    #B1BBC8;
+  --blue-pale:    #D9D9D8;
   --sand:         #F0EDE5;
-  --snow:         #D9D9D8;   /* Concerto */
+  --snow:         #D9D9D8;
 
   --gold:         #C9A227;
   --gold-soft:    rgba(201,162,39,0.45);
@@ -82,21 +82,23 @@ input:focus-visible {
 ::-webkit-scrollbar-thumb { background: var(--blue-soft); border-radius: 4px; }
 
 .page { display: none; min-height: 100vh; }
-.page.active { display: block; }
+.page.active {
+  display: block;
+  animation: pageFadeIn .4s cubic-bezier(.4,0,.2,1);
+}
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* ============================================================
-   NAVBAR
-   ============================================================ */
-/* NOTA: substituída pela nova Navbar (hambúrguer + logo central + drawer,
-   sem divisória). As regras abaixo ficam como legado/fallback; o estilo
-   real da navbar agora vive no <style> embutido em Navbar.jsx. */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 5%;
   height: 68px;
   background: var(--navy-deep);
-  border-bottom: 1px solid var(--gold-soft);
+  border-bottom: 1px solid var(--gold);
+  box-shadow: 0 2px 10px rgba(201, 162, 39, 0.25);
 }
 
 .nav-logo {
@@ -126,9 +128,7 @@ input:focus-visible {
   transition: opacity var(--transition), transform var(--transition);
 }
 .nav-cta:hover { opacity: .88; transform: translateY(-1px); }
-/* ============================================================
-   BOTÕES GLOBAIS (usados no Hero, Auth, Minicursos, etc.)
-   ============================================================ */
+
 .btn-primary {
   background: var(--blue-action);
   color: var(--white);
@@ -159,11 +159,6 @@ input:focus-visible {
   color: var(--success-deep);
   background: rgba(79,121,101,0.06);
 }
-.nav-cta:hover { background: var(--success); transform: translateY(-1px); }
-
-/* ============================================================
-   HOME PAGE — seções abaixo do Hero (o Hero agora é o HeroParallax.jsx)
-   ============================================================ */
 
 .section { padding: 5.5rem 5%; }
 .section-label {
@@ -193,7 +188,7 @@ input:focus-visible {
   box-shadow: var(--shadow);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.stat-card:hover { border-color: var(--blue-action); transform: translateY(-3px); box-shadow: var(--shadow-glow); }
+.stat-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: var(--shadow-glow); }
 .stat-card .num {
   font-family: var(--font-display);
   font-size: 2.2rem; font-weight: 800;
@@ -201,7 +196,6 @@ input:focus-visible {
 }
 .stat-card .label { font-size: .82rem; color: var(--muted); margin-top: .4rem; }
 
-/* ── SCHEDULE ── */
 .schedule-section { background: var(--bg-alt); }
 .schedule-grid { display: grid; gap: 1rem; max-width: 860px; margin: 2.5rem auto 0; }
 
@@ -215,7 +209,7 @@ input:focus-visible {
   box-shadow: var(--shadow);
   transition: border-color var(--transition), transform var(--transition);
 }
-.schedule-item:hover { border-color: var(--blue-action); transform: translateY(-2px); }
+.schedule-item:hover { border-color: var(--gold); transform: translateY(-2px); }
 
 .sch-time {
   font-family: var(--font-display);
@@ -237,7 +231,6 @@ input:focus-visible {
 .tag-teal  { background: rgba(74,111,165,.10);  color: var(--blue-action);  border: 1px solid rgba(74,111,165,.30); }
 .tag-gray  { background: rgba(46,62,109,.05);   color: var(--muted);         border: 1px solid rgba(46,62,109,.12); }
 
-/* ── SPEAKERS ── */
 .speakers-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
   gap: 1.5rem; margin-top: 2.5rem;
@@ -251,7 +244,7 @@ input:focus-visible {
   box-shadow: var(--shadow);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.speaker-card:hover { border-color: var(--blue-action); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+.speaker-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
 
 .speaker-avatar {
   width: 70px; height: 70px; border-radius: 50%;
@@ -264,7 +257,6 @@ input:focus-visible {
 .speaker-name { font-weight: 700; font-size: .95rem; margin-bottom: .2rem; color: var(--ink); }
 .speaker-role { font-size: .78rem; color: var(--muted); line-height: 1.4; }
 
-/* ── VIDEO SECTION ── */
 .video-section { background: var(--bg-alt); }
 .video-wrapper {
   max-width: 800px; margin: 2.5rem auto 0;
@@ -274,7 +266,6 @@ input:focus-visible {
 }
 .video-wrapper iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
 
-/* ── FOOTER ── */
 .footer {
   background: var(--navy-deep);
   border-top: 1px solid var(--line);
@@ -285,9 +276,6 @@ input:focus-visible {
 }
 .footer strong { color: var(--white); }
 
-/* ============================================================
-   LOGIN / CADASTRO PAGE — glassmorphism (paleta Íntegra)
-   ============================================================ */
 .auth-page {
   position: relative;
   min-height: 100vh;
@@ -409,17 +397,68 @@ input:focus-visible {
 .auth-footnote { text-align: center; font-size: .78rem; color: rgba(255,255,255,0.75); margin-top: .6rem; }
 .auth-footnote a { color: var(--blue-soft); cursor: pointer; text-decoration: underline; }
 
-/* ============================================================
-   MINICURSOS PAGE
-   ============================================================ */
 .minicursos-page { padding-top: 5rem; min-height: 100vh; }
 
 .minicursos-hero {
-  padding: 4rem 5% 3rem;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  position: relative;
+  padding: 6.5rem 5% 4rem;
+  background: linear-gradient(160deg, #000014 0%, #04044A 35%, #2A4D88 75%, #7C94B8 100%);
+  overflow: hidden;
 }
-.minicursos-hero .section-label { margin-bottom: .5rem; }
+.minicursos-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 75% 20%, rgba(201,162,39,0.14), transparent 65%);
+  pointer-events: none;
+}
+.minicursos-hero .section-label {
+  margin-bottom: .5rem;
+  color: var(--gold);
+  position: relative;
+}
+.minicursos-hero .section-title {
+  color: #FFFFFF;
+  position: relative;
+}
+.minicursos-hero .section-body {
+  color: rgba(255,255,255,0.82);
+  position: relative;
+}
+.minicursos-hero .course-count-badge {
+  position: relative;
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(201,162,39,0.4);
+  color: #FFFFFF;
+}
+.inscricoes-hero {
+  position: relative;
+  padding: 6.5rem 5% 3.5rem;
+  background: linear-gradient(160deg, #000014 0%, #04044A 35%, #2A4D88 75%, #7C94B8 100%);
+  overflow: hidden;
+}
+.inscricoes-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 75% 20%, rgba(201,162,39,0.14), transparent 65%);
+  pointer-events: none;
+}
+.inscricoes-hero .section-label {
+  color: var(--gold);
+  position: relative;
+}
+.inscricoes-hero .section-title {
+  color: #FFFFFF;
+  position: relative;
+}
+
+.inscricoes-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 5% 5rem;
+}
+
 
 .course-count-badge {
   display: inline-flex; align-items: center; gap: .5rem;
@@ -441,7 +480,7 @@ input:focus-visible {
   box-shadow: var(--shadow);
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
-.minicurso-card:hover { border-color: var(--blue-action); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+.minicurso-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 
 .minicurso-header {
   display: flex; align-items: center; gap: 1.2rem;
@@ -481,8 +520,8 @@ input:focus-visible {
 .fill-blue  { background: var(--blue-action); }
 
 .btn-inscrever {
-  background: var(--blue-action);
-  color: var(--white);
+  background: var(--navy-deep) !important;
+  color: #FFFFFF !important;
   border: none; border-radius: var(--radius);
   padding: .7rem 1.6rem;
   font-family: var(--font-body); font-size: .9rem; font-weight: 600;
@@ -490,12 +529,12 @@ input:focus-visible {
   transition: background var(--transition), transform var(--transition);
   white-space: nowrap;
 }
-.btn-inscrever:hover:not(:disabled) { background: var(--success); transform: translateY(-1px); }
-.btn-inscrever:disabled { background: rgba(46,62,109,0.08); color: var(--muted); cursor: not-allowed; }
+.btn-inscrever:hover:not(:disabled) { background: var(--success) !important; transform: translateY(-1px); }
+.btn-inscrever:disabled { background: rgba(46,62,109,0.08) !important; color: var(--muted) !important; cursor: not-allowed; }
 .btn-inscrever.inscrito {
-  background: rgba(79,121,101,0.14);
-  color: var(--success-deep);
-  border: 1px solid rgba(79,121,101,0.35);
+  background: var(--success) !important;
+  color: #FFFFFF !important;
+  border: none !important;
 }
 
 .notice-box {
@@ -508,7 +547,6 @@ input:focus-visible {
 }
 .notice-box strong { color: var(--navy); }
 
-/* ── Página de detalhe / inscrição do minicurso ── */
 .mcd-page { max-width: 1040px; margin: 0 auto; padding: 6.5rem 5% 4rem; min-height: 100vh; }
 .mcd-back {
   display: inline-flex; align-items: center; gap: .4rem;
@@ -516,7 +554,7 @@ input:focus-visible {
   cursor: pointer; text-decoration: none; margin-bottom: 1.6rem;
   transition: color var(--transition);
 }
-.mcd-back:hover { color: var(--blue-action); }
+.mcd-back:hover { color: var(--gold); }
 
 .mcd-grid { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; align-items: start; }
 
@@ -562,7 +600,6 @@ input:focus-visible {
   .mcd-form-card { position: static; }
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 200;
   background: rgba(46,62,109,0.45); backdrop-filter: blur(4px);
@@ -604,11 +641,8 @@ input:focus-visible {
   font-family: var(--font-body); font-size: .9rem; cursor: pointer;
   transition: border-color var(--transition), color var(--transition);
 }
-.btn-cancel:hover { border-color: var(--blue-action); color: var(--navy); }
+.btn-cancel:hover { border-color: var(--gold); color: var(--navy); }
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
 @media (max-width: 768px) {
   .about-grid { grid-template-columns: 1fr; }
   .schedule-item { grid-template-columns: 1fr; gap: .4rem; }
@@ -619,34 +653,54 @@ input:focus-visible {
   .btn-inscrever { width: 100%; }
 }
 
-/* ── toast ── */
 .toast {
-  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--success-deep);
+  position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(30px) scale(.95);
+  background: var(--navy-deep);
   color: white;
-  padding: .75rem 1.6rem;
+  padding: .85rem 1.8rem;
   border-radius: 99px;
-  font-size: .9rem; font-weight: 600;
-  box-shadow: 0 8px 22px rgba(59,91,76,0.32);
+  border: 1px solid var(--gold-soft);
+  font-size: .88rem; font-weight: 600;
+  font-family: var(--font-body);
+  box-shadow: 0 12px 32px rgba(4,4,74,0.35);
   z-index: 999;
-  opacity: 0; transition: opacity .25s, transform .25s;
+  opacity: 0; transition: opacity .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1);
   pointer-events: none;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+.toast::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
 
-/* ============================================================
-   MINHAS INSCRIÇÕES
-   ============================================================ */
-.inscricoes-page { max-width: 900px; margin: 0 auto; padding: 7.5rem 5% 5rem; }
-.inscricoes-header { margin-bottom: 2rem; }
-
+.inscricoes-page {
+  max-width: 900px; margin: 0 auto; padding: 7.5rem 5% 5rem;
+  position: relative;
+}
+.inscricoes-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(42,77,136,0.06), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
 .status-card {
   background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--radius-lg); padding: 1.5rem 1.8rem;
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; margin-bottom: 2rem; box-shadow: var(--shadow);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
+.status-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 .status-card .status-left { display: flex; align-items: center; gap: 1rem; }
 .status-dot {
   width: 12px; height: 12px; border-radius: 50%;
@@ -661,9 +715,9 @@ input:focus-visible {
   border-radius: var(--radius-lg); padding: 1.4rem 1.6rem;
   display: flex; align-items: center; gap: 1.2rem;
   margin-bottom: 1rem; box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
-.inscricao-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+.inscricao-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); border-color: var(--gold); }
 .inscricao-item .minicurso-icon { flex-shrink: 0; }
 .inscricao-info { flex: 1; min-width: 0; }
 .inscricao-info .titulo { font-weight: 700; color: var(--ink); font-size: 1.02rem; }
@@ -677,7 +731,7 @@ input:focus-visible {
   cursor: pointer; transition: border-color var(--transition), background var(--transition);
   white-space: nowrap;
 }
-.btn-link-action:hover { border-color: var(--blue-action); background: var(--surface-soft); }
+.btn-link-action:hover { border-color: var(--gold); background: var(--surface-soft); }
 .btn-link-action.danger { color: var(--danger); }
 .btn-link-action.danger:hover { border-color: var(--danger); }
 
@@ -689,9 +743,6 @@ input:focus-visible {
 .empty-state .emoji { font-size: 2.4rem; margin-bottom: .8rem; }
 .empty-state p { color: var(--muted); margin-bottom: 1.2rem; }
 
-/* ============================================================
-   CERTIFICADOS
-   ============================================================ */
 .certificados-page { max-width: 900px; margin: 0 auto; padding: 7.5rem 5% 5rem; }
 
 .cert-card {
@@ -699,7 +750,9 @@ input:focus-visible {
   border-radius: var(--radius-lg); padding: 1.6rem 1.8rem;
   display: flex; align-items: center; justify-content: space-between;
   gap: 1.2rem; margin-bottom: 1rem; box-shadow: var(--shadow);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
+.cert-card:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 .cert-card .cert-info { display: flex; align-items: center; gap: 1.1rem; }
 .cert-card .titulo { font-weight: 700; color: var(--ink); font-size: 1rem; }
 .cert-card .meta { font-size: .83rem; color: var(--muted); margin-top: .25rem; }
@@ -711,7 +764,8 @@ input:focus-visible {
 .cert-status.pendente { background: rgba(92,107,133,0.12); color: var(--muted); }
 
 .cert-page { max-width: 1100px; margin: 0 auto; padding: 7.5rem 5% 4rem; }
-.cert-back { display: inline-block; margin-bottom: 1.5rem; color: var(--navy); font-size: .88rem; font-weight: 600; cursor: pointer; }
+.cert-back { display: inline-block; margin-bottom: 1.5rem; color: var(--navy); font-size: .88rem; font-weight: 600; cursor: pointer; transition: color var(--transition); }
+.cert-back:hover { color: var(--gold); }
 
 .cert-sheet {
   background: var(--surface);
@@ -817,9 +871,6 @@ input:focus-visible {
     scroll-behavior: auto !important;
   }
 }
-/* ============================================================
-   PATCH FINAL — CONTRASTE E LEGIBILIDADE
-   ============================================================ */
 
 .auth-card {
   background: #FFFFFF !important;
@@ -897,12 +948,10 @@ input:focus-visible {
   border: none !important;
 }
 
-/* Fundo azul claro cobrindo a página inteira, até as bordas */
 .page:has(.mcd-page) {
   background: #BBD0ED;
 }
 
-/* Caixa "Você já está inscrito(a)" com azul escuro da paleta (mais específico que o .form-success genérico acima) */
 .mcd-form-card .form-success {
   background: var(--navy-deep) !important;
   border: 1px solid var(--navy-deep) !important;

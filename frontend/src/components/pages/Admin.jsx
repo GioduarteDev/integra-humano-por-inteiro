@@ -143,6 +143,7 @@ export default function Admin({ currentUser, minicursos, recarregarMinicursos, n
       setErro(err.message || 'Não foi possível remover.');
     }
   };
+
   const inscreverPorContato = async () => {
     setErro('');
     try {
@@ -284,7 +285,7 @@ export default function Admin({ currentUser, minicursos, recarregarMinicursos, n
                   </div>
                 </div>
 
-               {verInscritosDe === mc.id && (
+                {verInscritosDe === mc.id && (
                   <div style={{ background: 'var(--surface-soft)', borderRadius: '12px', padding: '1rem', marginTop: '.5rem' }}>
                     <div style={{ display: 'flex', gap: '.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
                       <input
@@ -327,7 +328,7 @@ export default function Admin({ currentUser, minicursos, recarregarMinicursos, n
               </div>
             ))}
           </>
-        )} 
+        )}
 
         {aba === 'participantes' && (
           <>
@@ -349,7 +350,6 @@ export default function Admin({ currentUser, minicursos, recarregarMinicursos, n
                     value={formParticipante.nome}
                     onChange={(e) => setFormParticipante({ ...formParticipante, nome: e.target.value })}
                   />
-                  {aba === 'dashboard' && <Dashboard currentUser={currentUser} />}
                 </div>
                 <div className="field">
                   <label>Email</label>
@@ -412,6 +412,10 @@ export default function Admin({ currentUser, minicursos, recarregarMinicursos, n
               </div>
             ))}
           </>
+        )}
+
+        {aba === 'dashboard' && (
+          <Dashboard currentUser={currentUser} />
         )}
       </div>
     </div>
